@@ -1,0 +1,57 @@
+@startuml UML-A
+!define Table(name,desc) class name as "desc"
+enum EditMode {
+  None
+  Hours
+  Minutes
+}
+
+class WatchModel {
+  - hours: number
+  - minutes: number
+  - seconds: number
+  - mode: EditMode
+  + constructor()
+  + updateTime(): void
+  + getTimeString(): string
+  + increaseHours(): void
+  + increaseMinutes(): void
+  + cycleMode(): void
+  - initWithCurrentTime(): void
+}
+
+class WatchView {
+  - digitalDisplay: HTMLElement
+  - hoursElement: HTMLElement
+  - minutesElement: HTMLElement
+  - secondsElement: HTMLElement
+  - modeButton: HTMLElement
+  - increaseButton: HTMLElement
+  - lightButton: HTMLElement
+  - isYellow: boolean
+  + constructor()
+  + renderTime(time: string): void
+  + toggleBackground(): void
+  + blinkHours(isBlinking: boolean): void
+  + blinkMinutes(isBlinking: boolean): void
+  + bindModeClick(handler: Function): void
+  + bindIncreaseClick(handler: Function): void
+  + bindLightClick(handler: Function): void
+}
+
+class WatchController {
+  - model: WatchModel
+  - view: WatchView
+  - timerId: number
+  + constructor(model: WatchModel, view: WatchView)
+  + init(): void
+  + updateWatch(): void
+  + handleModeClick(): void
+  + handleIncreaseClick(): void
+  + handleLightClick(): void
+}
+
+WatchController --> WatchModel : uses
+WatchController --> WatchView : uses
+
+@enduml

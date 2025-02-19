@@ -1,0 +1,103 @@
+@startuml UML-C
+!define Table(name,desc) class name as "desc"
+enum EditMode {
+  None
+  Hours
+  Minutes
+}
+
+class WatchModel {
+  - hours: number
+  - minutes: number
+  - seconds: number
+  - mode: EditMode
+  - offset: number
+  + constructor(offset: number)
+  + updateTime(): void
+  + getTimeString(): string
+  + increaseHours(): void
+  + increaseMinutes(): void
+  + cycleMode(): void
+  + resetTime(): void
+  - initWithCurrentTime(): void
+}
+
+class WatchView {
+  - container: HTMLElement
+  - digitalDisplay: HTMLElement
+  - analogDisplay: HTMLElement
+  - hoursElement: HTMLElement
+  - minutesElement: HTMLElement
+  - secondsElement: HTMLElement
+  - modeButton: HTMLElement
+  - increaseButton: HTMLElement
+  - lightButton: HTMLElement
+  - hourNeedle?: HTMLElement
+  - minuteNeedle?: HTMLElement
+  - secondNeedle?: HTMLElement
+  - isYellow: boolean
+  + constructor(container?: HTMLElement)
+  + renderTime(time: string): void
+  + updateAnalogHands(hours: number, minutes: number, seconds: number): void
+  + toggleBackground(): void
+  + blinkHours(isBlinking: boolean): void
+  + blinkMinutes(isBlinking: boolean): void
+  + bindModeClick(handler: Function): void
+  + bindIncreaseClick(handler: Function): void
+  + bindLightClick(handler: Function): void
+  + toggleUIMode(isAnalog: boolean): void
+}
+
+class WatchController {
+  - model: WatchModel
+  - view: WatchView
+  - timerId: number
+  + constructor(model: WatchModel, view: WatchView, getFormat24H: () => boolean)
+  + init(): void
+  + updateWatch(): void
+  + handleModeClick(): void
+  + handleIncreaseClick(): void
+  + handleLightClick(): void
+}
+
+class Clock {
+  + id: string
+  + timezone: string
+  + offset: number
+  + format24H: boolean
+  + isAnalog: boolean
+  + model: WatchModel
+  + view: WatchView
+  + controller: WatchController
+  + container: HTMLElement
+  + constructor(id: string, timezone: string, offset: number)
+  + init(): void
+  + update(): void
+  + updateWithGlobalTime(now: Date): void
+  + toggleTimeFormat(): voidÒ
+  + toggleUIMode(): void
+  + resetTime(): void
+  + remove(): void
+}
+
+class ClockManager {
+  - clocks: Clock[]
+  - container: HTMLElement
+  - timerId: number
+  + constructor(container: HTMLElement)
+  + addClock(timezone: string, offset: number): Clock
+  + removeClock(id: string): void
+  + getClocks(): Clock[]
+  - startGlobalTimer(): void
+  - setupDragAndDrop(): void
+  - updateClocksArray(): void
+}
+
+WatchController --> WatchModel : uses
+WatchController --> WatchView : uses
+Clock "1" o-- "1" WatchModel : uses
+Clock "1" o-- "1" WatchView : uses
+Clock "1" o-- "1" WatchController : uses
+ClockManager "1" o-- "*" Clock : manages
+
+@enduml
