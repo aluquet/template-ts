@@ -13,8 +13,8 @@ export class WatchModel {
   offset: number;
 
   constructor(offset = 0) {
-      this.offset = offset;
-      this.initWithCurrentTime();
+    this.offset = offset;
+    this.initWithCurrentTime();
   }
 
   private initWithCurrentTime(): void {
@@ -29,14 +29,10 @@ export class WatchModel {
     this.seconds++;
     if (this.seconds >= 60) {
       this.seconds = 0;
-      if (this.mode !== EditMode.Minutes) {
-        this.minutes++;
-        if (this.minutes >= 60) {
-          this.minutes = 0;
-          if (this.mode !== EditMode.Hours) {
-            this.hours = (this.hours + 1) % 24;
-          }
-        }
+      this.minutes++;
+      if (this.minutes >= 60) {
+        this.minutes = 0;
+        this.hours = (this.hours + 1) % 24;
       }
     }
   }
