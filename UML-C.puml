@@ -72,7 +72,6 @@ class Clock {
   + container: HTMLElement
   + constructor(id: string, timezone: string, offset: number)
   + init(): void
-  + update(): void
   + updateWithGlobalTime(now: Date): void
   + toggleTimeFormat(): voidÒ
   + toggleUIMode(): void

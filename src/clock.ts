@@ -94,47 +94,6 @@ export class Clock {
     this.controller.init();
   }
 
-  update(): void {
-    const savedHour = this.model.hours;
-    const savedMinute = this.model.minutes;
-
-    this.model.updateTime();
-
-    if (this.model.mode === EditMode.Hours) {
-      this.model.hours = savedHour;
-    } else if (this.model.mode === EditMode.Minutes) {
-      this.model.minutes = savedMinute;
-    }
-
-    let timeString = this.model.getTimeString();
-
-    if (!this.format24H) {
-      timeString = formatTimeString(timeString, this.format24H);
-    }
-
-    if (this.isAnalog) {
-        this.view.updateAnalogHands(
-            this.model.hours,
-            this.model.minutes,
-            this.model.seconds
-        );
-    } else {
-        this.view.renderTime(timeString);
-    }
-
-
-    if (this.model.mode === EditMode.Hours) {
-      this.view.blinkHours(true);
-      this.view.blinkMinutes(false);
-    } else if (this.model.mode === EditMode.Minutes) {
-      this.view.blinkHours(false);
-      this.view.blinkMinutes(true);
-    } else {
-      this.view.blinkHours(false);
-      this.view.blinkMinutes(false);
-    }
-  }
-
   updateWithGlobalTime(now: Date): void {
     const savedHour = this.model.hours;
     const savedMinute = this.model.minutes;
@@ -188,7 +147,6 @@ export class Clock {
     } else if (this.model.mode === EditMode.Minutes) {
       this.model.increaseMinutes();
     }
-    this.update();
   }
 
   toggleUIMode(): void {

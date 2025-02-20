@@ -65,7 +65,6 @@ class Clock {
   + container: HTMLElement
   + constructor(id: string, timezone: string, offset: number, container: HTMLElement)
   + init(): void
-  + update(): void
   + toggleTimeFormat(): void
   + resetTime(): void
   + remove(): void
