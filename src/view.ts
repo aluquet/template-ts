@@ -96,9 +96,15 @@ export class WatchView {
     if (isAnalog) {
       this.digitalDisplay.style.display = "none";
       this.analogDisplay.style.display = "block";
+      this.modeButton.style.display = "none";
+      this.increaseButton.style.display = "none";
+      this.lightButton.style.display = "none";
     } else {
       this.digitalDisplay.style.display = "block";
       this.analogDisplay.style.display = "none";
+      this.modeButton.style.display = "block";
+      this.increaseButton.style.display = "block";
+      this.lightButton.style.display = "block";
     }
   }
 }
